@@ -1,0 +1,15 @@
+*.DS_Store
+*.class
+*swp
+*~
+.idea
+*.iml
+*.ipr
+*.iws
+.shelf
+.settings/
+.classpath
+.project
+bin/
+*.ser
+undodir/
