@@ -85,4 +85,9 @@ return require('packer').startup(function(use)
 --     require("copilot_cmp").setup()
 --   end
 -- }
+-- use {                           -- doesn't work on android
+--   'tzachar/cmp-tabnine',
+--   run = './install.sh',
+--   requires = 'hrsh7th/nvim-cmp'
+-- } 
 end)
