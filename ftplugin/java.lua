@@ -128,7 +128,7 @@ local config = {
   },
   init_options = {
     bundles = {
-      vim.fn.glob("/data/data/com.termux/files/home/debug/com.microsoft.java.debug.plugin-0.44.0.jar", 1)
+      vim.fn.glob("/data/data/com.termux/files/home/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-0.46.0.jar", 1)
     },
   },
 }
