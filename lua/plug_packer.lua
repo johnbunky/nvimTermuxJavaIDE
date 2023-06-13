@@ -48,6 +48,7 @@ return require('packer').startup(function(use)
   -- use 'kabouzeid/nvim-lspinstall'
   use 'mfussenegger/nvim-jdtls'
   use "ray-x/lsp_signature.nvim"
+  use 'hdiniz/vim-gradle' 
   -- coc
   -- use {'neoclide/coc.nvim', branch = 'release'}
   -- terminal
