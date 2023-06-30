@@ -58,6 +58,6 @@ configs.setup {
   indent = { enable = true }
 }
 -- AIs 
-require("copilot").setup{}
+-- require("copilot").setup{}
 -- local tabnine = require('cmp_tabnine.config')
 -- tabnine:setup({max_lines = 1000, max_num_results = 20, sort = true})
