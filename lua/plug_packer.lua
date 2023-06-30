@@ -88,7 +88,7 @@ return require('packer').startup(function(use)
   -- AIs
   use 'madox2/vim-ai' -- asks money
   -- use 'Exafunction/codeium.vim' -- doesn't work on android, yet 
-  use { "zbirenbaum/copilot.lua" } -- asks money
+  -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",
 --   after = { "copilot.lua" },
