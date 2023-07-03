@@ -2,6 +2,8 @@
 
 This repository contains my custom keybindings for my Neovim configuration. These keybindings enhance my productivity and make it easier for me to navigate and use Neovim efficiently.
 
+![nvimIDE demo](./nvimIDE.gif)
+
 ## Keybindings
 
 ### General
