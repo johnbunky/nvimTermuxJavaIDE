@@ -1,4 +1,5 @@
 vim.opt.encoding = 'utf-8'
+vim.opt.clipboard:append("unnamedplus")
 
 require 'basic'
 require 'plug_packer'
@@ -9,8 +10,8 @@ require 'keymap'
 require 'autopairs'
 require 'completion'
 require('toggleterm').setup{
-      direction = 'float'
-        -- direction = 'tab'
+      -- direction = 'float'
+        direction = 'tab'
 }
 require("bufferline").setup{
   options = {
