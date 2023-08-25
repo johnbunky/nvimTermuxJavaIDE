@@ -40,7 +40,15 @@ require('mason').setup()
 require'lspconfig' 
 require'lspconfig'.gradle_ls.setup{}
 require'lspconfig'.groovyls.setup{}
-require'lspconfig'.cucumber_language_server.setup{}
+require'lspconfig'.cucumber_language_server.setup{
+    cmd = { "cucumber-language-server", "--stdio" },
+    filetypes = { "cucumber", "feature" },
+    root_dir = require("lspconfig").util.find_git_ancestor,
+    settings = {
+        features= {'src/test/java/**/*.feature'},
+        glue = {'src/test/java/**/*.java'}
+    }
+}
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = true,

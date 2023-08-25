@@ -16,7 +16,7 @@ key_map('n', '<leader>h', ':nohlsearch<CR>') -- clear search
 key_map('n', '<leader>ft', ':NvimTreeToggle<CR>') -- open tree
 key_map('n', '<leader>ff', ':lua require"nvim-tree".find_file()<CR>') -- find file
 key_map('n', '<leader>qq', ':q<CR>') -- close
-key_map('n', '<leader>ww', ':w<CR>') -- save
+key_map('n', '<leader>ww', ':w!<CR>') -- save
 key_map('n', '<leader>wa', ':wa<CR>') -- save all
 key_map('n', '<leader>to', ':tabnew<CR>') -- open new tab
 key_map("n", "<leader>tx", ":tabclose<CR>") -- close current tab
