@@ -27,6 +27,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 - `<leader>fh`: Displays help tags using Telescope.
 - `<leader>fb`: Lists open buffers using Telescope.
 - `<leader>ct`: Toggles the Tagbar sidebar.
+
 **Search and Rename in Whole Project**.
   1. Press `<leader>fs` to initiate a live search using Telescope.
   2. Enter `StringOne` and press `Enter`.
