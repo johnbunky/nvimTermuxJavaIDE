@@ -45,8 +45,8 @@ require'lspconfig'.cucumber_language_server.setup{
     filetypes = { "cucumber", "feature" },
     root_dir = require("lspconfig").util.find_git_ancestor,
     settings = {
-        features= {'src/test/java/**/*.feature'},
-        glue = {'src/test/java/**/*.java'}
+        features= {'src/test/**/*.feature'},
+        glue = {'src/test/**/*.java'}
     }
 }
 require("indent_blankline").setup {
@@ -60,7 +60,7 @@ require("better_escape").setup {
 -- TreeSettter Config
 local configs = require'nvim-treesitter.configs'
 configs.setup {
-  ensure_installed = {"lua", "java", },
+  ensure_installed = {"lua", "java", "groovy"},
   sync_install = false,
   auto_install = true,
   highlight = { enable = true },

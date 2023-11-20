@@ -87,7 +87,7 @@ return require('packer').startup(function(use)
   use 'rcarriga/cmp-dap'
   -- AIs
   use 'madox2/vim-ai' -- asks money
-  -- use 'Exafunction/codeium.vim' -- doesn't work on android, yet 
+  use 'Exafunction/codeium.vim' -- doesn't work on android, yet 
   -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",
