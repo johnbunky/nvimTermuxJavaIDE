@@ -34,9 +34,9 @@ require('lualine').setup {
   }
 }
 require('mason').setup()
--- require("mason-lspconfig").setup {
-    -- ensure_installed = { "gradle_ls", "jdtls", 'groovyls'},
--- }
+require("mason-lspconfig").setup {
+    ensure_installed = { "gradle_ls", "jdtls", 'groovyls'},
+}
 require'lspconfig' 
 require'lspconfig'.gradle_ls.setup{}
 require'lspconfig'.groovyls.setup{}
@@ -49,10 +49,7 @@ require'lspconfig'.cucumber_language_server.setup{
         glue = {'src/test/**/*.java'}
     }
 }
-require("indent_blankline").setup {
-    show_current_context = true,
-    show_current_context_start = true,
-}
+require('ibl').setup()
 -- better Escape
 require("better_escape").setup {
     mapping = {"jk", "jj"}, -- a table with mappings to use

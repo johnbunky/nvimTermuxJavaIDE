@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
   -- telescope
   use {
   'nvim-telescope/telescope.nvim', branch = '0.1.x',
-  requires = { {'nvim-lua/plenary.nvim'} }
+  requires =  {'nvim-lua/plenary.nvim'} 
   }
   -- languages parser and highlight 
   use 'sheerun/vim-polyglot'
@@ -86,8 +86,18 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
   -- AIs
+  use {
+    "Exafunction/codeium.nvim",
+    event = "BufRead",
+    requires = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+    },
+    config = function()
+        require("codeium").setup()
+    end
+  }
   use 'madox2/vim-ai' -- asks money
-  use 'Exafunction/codeium.vim' -- doesn't work on android, yet 
   -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",

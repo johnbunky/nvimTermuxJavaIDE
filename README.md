@@ -90,14 +90,58 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 - 
 ## Installation
 
-1. Install Neovim on your system.
-2. Clone this repository into your Neovim configuration directory (usually located at `~/.config/nvim`).
-3. Run :PackerInstall
-4. Run :Mason
-5. Install( navigate and press 'i')
-      ◍ cucumber-language-server
-      ◍ gradle-language-server
-      ◍ groovy-language-server
-      ◍ java-debug-adapter
-      ◍ java-test
-      ◍ jdtls
+1. First, make sure to have Neovim installed on your system. You can install it using your package manager. For example, on a system with the `pkg` package manager, you can run:
+
+    ```
+    pkg update && pkg upgrade
+    pkg install neovim git openjdk-17 gradle clang python nodejs-lts ripgrep fd
+    ```
+
+2. Clone this repository into your Neovim configuration directory. Typically, this directory is located at `~/.config/nvim`. You can do this by running:
+
+    ```
+    git clone <repository_url> ~/.config/nvim
+    ```
+
+3. Once cloned, navigate into the `~/.config/nvim` directory.
+
+4. Run the following command to update plugins:
+
+    ```
+    nvim -c "MasonUpdate" -c "PackerInstall"
+    ```
+
+    During the installation process, you may be prompted to install additional components. Navigate and press 'i' for each component listed.
+
+    - cucumber-language-server
+    - gradle-language-server
+    - groovy-language-server
+    - java-debug-adapter
+    - java-test
+    - jdtls
+
+5. If any issues arise during the setup process, you can check the health of Neovim by running:
+
+    ```
+    nvim -c "checkhealth"
+    ```
+
+## Included Configuration Files
+
+- `README.md`: This file providing setup instructions.
+- `init.lua`: Neovim initialization file.
+- `nvimIDE.gif`: A demonstration GIF.
+- `ftplugin/groovy.lua` and `ftplugin/java.lua`: Configuration files for Groovy and Java filetype plugins.
+- `lang-servers/intellij-java-google-style.xml`: Language server configuration for IntelliJ Java with Google Style.
+- `lua/`: Lua configuration files including autopairs, colorscheme, completion, keymap, and others.
+- `plugin/packer_compiled.lua`: Compiled plugin file for Packer.
+
+## Inspiration Sources
+
+Special thanks to the following sources for inspiration:
+
+- [YouTube - Neovim Setup Tutorial Series](https://www.youtube.com/watch?v=jGAAnrOF2mQ&list=PLOb_fzsCdFtpf11TYmz0ND_fXwNtf3Lda&pp=iAQB)
+
+- [YouTube - Neovim + LSP + Treesitter + Telescope](https://www.youtube.com/watch?v=w7i4amO_zaE&t=109s)
+
+- [YouTube - Neovim Lua Setup](https://www.youtube.com/watch?v=vdn_pKJUda8&t=110s)
