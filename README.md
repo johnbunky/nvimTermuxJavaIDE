@@ -124,6 +124,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
     ```
     nvim -c "checkhealth"
+    nvim -c ":LspLog"
     ```
 
 ## Included Configuration Files
