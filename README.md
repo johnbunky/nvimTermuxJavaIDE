@@ -94,13 +94,14 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
     ```
     pkg update && pkg upgrade
-    pkg install neovim git openjdk-17 gradle clang python nodejs-lts ripgrep fd
+    pkg install neovim git openjdk-17 gradle clang python nodejs ripgrep fd wget
+    pip install pynvim
     ```
 
 2. Clone this repository into your Neovim configuration directory. Typically, this directory is located at `~/.config/nvim`. You can do this by running:
 
     ```
-    git clone <repository_url> ~/.config/nvim
+    git clone https://github.com/johnbunky/nvimTermuxJavaIDE.git ~/.config/nvim
     ```
 
 3. Once cloned, navigate into the `~/.config/nvim` directory.
@@ -124,7 +125,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
     ```
     nvim -c "checkhealth"
-    nvim -c ":LspLog"
+    nvim -c "LspLog"
     ```
 
 ## Included Configuration Files

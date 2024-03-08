@@ -86,17 +86,17 @@ return require('packer').startup(function(use)
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
   -- AIs
-  use {
-    "Exafunction/codeium.nvim",
-    event = "BufRead",
-    requires = {
-        "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
-    },
-    config = function()
-        require("codeium").setup()
-    end
-  }
+  -- use {                        -- it doesn't work yet
+  --   "Exafunction/codeium.nvim",
+  --   event = "BufRead",
+  --   requires = {
+  --       "nvim-lua/plenary.nvim",
+  --       "hrsh7th/nvim-cmp",
+  --   },
+  --   config = function()
+  --       require("codeium").setup()
+  --   end
+  -- }
   use 'madox2/vim-ai' -- asks money
   -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
