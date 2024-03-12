@@ -109,8 +109,9 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 4. Run the following command to update plugins:
 
     ```
-    nvim -c "MasonUpdate" -c "PackerInstall"
+    nvim -c "MasonUpdate"
     ```
+    :PackerInstall
 
     During the installation process, you may be prompted to install additional components. Navigate and press 'i' for each component listed.
 

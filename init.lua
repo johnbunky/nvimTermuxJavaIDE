@@ -35,7 +35,7 @@ require('lualine').setup {
 }
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "gradle_ls", "jdtls", 'groovyls'},
+    ensure_installed = { "gradle_ls", "jdtls",},
 }
 require'lspconfig' 
 require'lspconfig'.gradle_ls.setup{}
