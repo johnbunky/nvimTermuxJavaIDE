@@ -109,12 +109,12 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 4. Run the following command to update plugins:
 
     ```
-    nvim -c "MasonUpdate"
+    nvim -c "MasonUpdate" -c "PackerInstall"
     ```
-    :PackerInstall
 
     During the installation process, you may be prompted to install additional components. Navigate and press 'i' for each component listed.
 
+    :Mason
     - cucumber-language-server
     - gradle-language-server
     - groovy-language-server
