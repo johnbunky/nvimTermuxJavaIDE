@@ -24,7 +24,8 @@ cmp.setup {
   sources = {
       {name = 'nvim_lsp'}, 
       {name = 'buffer', keyword_length = 3},
-      {name = "luasnip", keyword_length = 2},
+      {name = "luasnip", keyword_length = 2}, 
+      {name = 'codeium', keyword_length = 0},
       -- {name = 'cmp_tabnine', keyword_length = 3},
   },
 
@@ -36,20 +37,28 @@ cmp.setup {
   preselect = cmp.PreselectMode.None,
   
   formatting = {
-      format = function(entry, vim_item)
+            format = require('lspkind').cmp_format({
+            mode = "symbol",
+            maxwidth = 50,
+            ellipsis_char = '...',
+            symbol_map = { Codeium = "", }
+        })
+      --format = function(entry, vim_item)
           -- fancy icons and a name of kind
-          vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
-                              " " .. vim_item.kind
+      --    vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
+      --                        " " .. vim_item.kind
           -- set a name for each source
-          vim_item.menu = ({
-              nvim_lsp = "+",
-              buffer = "#",
-              luasnip = "-",
+      --    vim_item.menu = ({
+      --        nvim_lsp = "+",
+      --        buffer = "#",
+      --        luasnip = "-",
+      --        codeium = "",
               -- cmp_tabnine = "[Tn]",
-          })[entry.source.name]
-          return vim_item
-      end
+      --    })[entry.source.name]
+      --    return vim_item
+      --end
   },
+  
   mapping = {
       ['<C-e>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm({

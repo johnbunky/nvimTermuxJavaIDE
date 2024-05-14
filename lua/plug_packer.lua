@@ -1,10 +1,20 @@
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- automatically install and set up packer.nvim 
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-  -- use 'nvim-lua/plenary.nvim'
   use 'christoomey/vim-tmux-navigator'
   use 'lewis6991/impatient.nvim'
   -- themes
@@ -38,6 +48,7 @@ return require('packer').startup(function(use)
   -- use 'kabouzeid/nvim-lspinstall'
   use 'mfussenegger/nvim-jdtls'
   use "ray-x/lsp_signature.nvim"
+  use 'hdiniz/vim-gradle' 
   -- coc
   -- use {'neoclide/coc.nvim', branch = 'release'}
   -- terminal
@@ -74,10 +85,22 @@ return require('packer').startup(function(use)
   -- Debugging
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
+
   -- AIs
-  use 'madox2/vim-ai' -- asks money
-  -- use 'Exafunction/codeium.vim' -- doesn't work on android, yet 
-  use { "zbirenbaum/copilot.lua" } -- asks money
+ use {
+   "Exafunction/codeium.nvim",
+   event = "BufRead",
+   requires = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+    },
+    config = function()
+       require("codeium").setup()
+      end   
+ }
+  
+  -- use 'madox2/vim-ai' -- asks money
+  -- use- { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",
 --   after = { "copilot.lua" },
@@ -90,4 +113,8 @@ return require('packer').startup(function(use)
 --   run = './install.sh',
 --   requires = 'hrsh7th/nvim-cmp'
 -- } 
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)

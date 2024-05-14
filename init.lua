@@ -4,7 +4,7 @@ require 'basic'
 require 'plug_packer'
 require 'colorscheme'
 require 'tree'
-require 'comment'
+require 'Comment'
 require 'keymap'
 require 'autopairs'
 require 'completion'
@@ -39,11 +39,21 @@ require('mason').setup()
 require'lspconfig' 
 require'lspconfig'.gradle_ls.setup{}
 require'lspconfig'.groovyls.setup{}
-require'lspconfig'.cucumber_language_server.setup{}
-require("indent_blankline").setup {
-    show_current_context = true,
-    show_current_context_start = true,
+require'lspconfig'.cucumber_language_server.setup{
+  cmd = { "cucumber-language-server", "--stdio" },
+  filetype = { "cucumber", "feature" },
+  root_dir = require("lspconfig").util.find_git_ancestor,
+  settings = {
+    features = {'src/test/**/*.feature'},
+    glue = {'src/test/**/*.java'}
+  }
 }
+require'lspconfig'.pyright.setup{}
+require("ibl").setup()
+--require("indent_blankline").setup {
+--    show_current_context = true,
+--    show_current_context_start = true,
+--}
 -- better Escape
 require("better_escape").setup {
     mapping = {"jk", "jj"}, -- a table with mappings to use
@@ -51,13 +61,14 @@ require("better_escape").setup {
 -- TreeSettter Config
 local configs = require'nvim-treesitter.configs'
 configs.setup {
-  ensure_installed = {"lua", "java", },
+  ensure_installed = {"lua", "java", "groovy"},
   sync_install = false,
   auto_install = true,
   highlight = { enable = true },
   indent = { enable = true }
 }
 -- AIs 
-require("copilot").setup{}
+-- require('codeium').setup{}
+-- require("copilot").setup{}
 -- local tabnine = require('cmp_tabnine.config')
 -- tabnine:setup({max_lines = 1000, max_num_results = 20, sort = true})

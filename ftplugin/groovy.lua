@@ -6,7 +6,7 @@ lspconfig.groovyls.setup {
     print('Groovy language server started!')
     -- Additional configuration or setup for the language server
   end,
-  cmd = { "java", "-jar", "/data/data/com.termux/files/home/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar"},
+  cmd = { "java", "-jar", "/Users/you/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar"},
  
   root_dir = util.root_pattern('.git', '.groovy', 'build.gradle')
 }

@@ -57,12 +57,15 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 - `<S-R>`: Shows references to the symbol under the cursor.
 - `<S-H>`: Displays hover information for the symbol under the cursor.
 - `<A-Enter>`: Triggers code actions for the current line.
+- `<leader>nc`: Renames the symbol under the cursor using the Language Server Protocol.
+- `<leader>fr`: Uses Telescope to search for references to the symbol under the cursor. 
 
 ### Java
 
 - `<leader>oi`: Organizes imports for the Java file.
 - `<leader>jc`: Compiles the Java project incrementally.
 - `<leader>tm`: Runs the test method under the cursor.
+- `<leader>TM`: Runs the test method under the cursor with code coverage.
 - `<leader>tc`: Runs all tests in the current class.
 - `<leader>TC`: Runs all tests in the current class with code coverage.
 
@@ -83,4 +86,12 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
 1. Install Neovim on your system.
 2. Clone this repository into your Neovim configuration directory (usually located at `~/.config/nvim`).
-
+3. Run :PackerInstall
+4. Run :Mason
+5. Install( navigate and press 'i')
+      ◍ cucumber-language-server
+      ◍ gradle-language-server
+      ◍ groovy-language-server
+      ◍ java-debug-adapter
+      ◍ java-test
+      ◍ jdtls
