@@ -26,6 +26,20 @@ function find_child_by_type(expr, type_name)
   return expr_child
 end
 
+function find_nth_child_by_type(expr, type_name, n)
+  local count = 0
+  for i = 0, expr:child_count() - 1 do
+    local child = expr:child(i)
+    if child:type() == type_name then
+      count = count + 1
+      if count == n then
+        return child
+      end
+    end
+  end
+  return nil
+end
+
 function M.get_current_method_name()
   local current_node = ts_utils.get_node_at_cursor()
   if not current_node then return nil end
@@ -33,9 +47,11 @@ function M.get_current_method_name()
   local expr = find_node_by_type(current_node, 'method_declaration')
   if not expr then return nil end
 
-  local child = find_child_by_type(expr, 'identifier')
-  if not child then return nil end
-  return vim.treesitter.get_node_text(child, 0)
+  -- Get the 2nd identifier (1st is return type like Task, 2nd is actual method name)
+  local method_identifier = find_nth_child_by_type(expr, 'identifier', 2)
+  if not method_identifier then return nil end
+
+  return vim.treesitter.get_node_text(method_identifier, 0)
 end
 
 function M.get_current_class_name()
