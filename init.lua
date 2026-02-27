@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
   end,
 })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.collection", "*.go", "*.gui", "*.input_binding" },
+  pattern = { "*.collection", "*.go", "*.gui", "*.input_binding", "*.project", "*.atlas" },
   callback = function()
     vim.bo.filetype = "defold"
   end,
