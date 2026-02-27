@@ -8,6 +8,12 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     vim.bo.filetype = "lua"
   end,
 })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.collection", "*.go", "*.gui", "*.input_binding" },
+  callback = function()
+    vim.bo.filetype = "defold"
+  end,
+})
 vim.opt.encoding = 'utf-8'
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.timeoutlen = 1000
@@ -66,6 +72,25 @@ vim.lsp.config("lua_ls", {
           -- Common Defold globals
           "hash", "pprint", "init", "final", "update", 
           "on_message", "on_input", "on_reload",
+          -- DefOS extension
+          "defos",  
+           -- Monarch screen manager
+          "monarch",    
+           -- Rendercam
+          "rendercam",    
+          -- Druid UI
+          "druid",    
+          -- Nakama
+          "nakama",
+        },
+        disable = {
+          "lowercase-global",  -- Defold uses lowercase module names
+          "trailing-space",
+        },
+        -- Group diagnostics by severity
+        groupSeverity = {
+          strong = "Warning",
+          strict = "Information",
         },
       },
       workspace = {
