@@ -85,19 +85,22 @@ return require('packer').startup(function(use)
   -- Debugging
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
+  use 'Ta"pwsh.exe -file .\\dl_binaries.ps1"styep/structlog.nvim'
   -- AIs
-  -- use {                        -- it doesn't work yet
-  --   "Exafunction/codeium.nvim",
-  --   event = "BufRead",
-  --   requires = {
-  --       "nvim-lua/plenary.nvim",
-  --       "hrsh7th/nvim-cmp",
-  --   },
-  --   config = function()
-  --       require("codeium").setup()
-  --   end
-  -- }
-  use 'madox2/vim-ai' -- asks money
+  use {                        
+    "Exafunction/codeium.nvim",
+    event = "BufRead",
+    requires = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+    },
+    config = function()
+        require("codeium").setup()
+    end
+  }
+
+  use { 'codota/tabnine-nvim', run = "pwsh.exe -file .\\dl_binaries.ps1" }
+  -- use 'madox2/vim-ai' -- asks money
   -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",
