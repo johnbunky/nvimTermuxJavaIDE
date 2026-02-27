@@ -75,11 +75,11 @@ key_map('n', '<leader>dr', ':lua require"dap".repl.open()<CR>')
 -- run debug
 function get_test_runner(test_name, debug)
   if debug then
-    return 'dotnet test --filter "Category=playground&FullyQualifiedName~IntegrationsTestAutomation.Tests.' .. test_name .. '" --logger "console;verbosity=detailed"'
-    -- return 'gradle test --tests="' .. test_name .. '" --debug-jvm' 
+    -- return 'dotnet test --filter "Category=playground&FullyQualifiedName~IntegrationsTestAutomation.Tests.' .. test_name .. '" --logger "console;verbosity=detailed"'
+    return 'gradle test --tests="' .. test_name .. '" --debug-jvm' 
   end
-    return 'dotnet test --filter "Category=playground&FullyQualifiedName~IntegrationsTestAutomation.Tests.' .. test_name .. '" --logger "console;verbosity=detailed"'
-  -- return 'mvn test -Dtest="' .. test_name .. '"' 
+    -- return 'dotnet test --filter "Category=playground&FullyQualifiedName~IntegrationsTestAutomation.Tests.' .. test_name .. '" --logger "console;verbosity=detailed"'
+  return 'mvn test -Dtest="' .. test_name .. '"' 
 end
 
 function run_java_test_method(debug)

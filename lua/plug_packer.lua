@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
   -- Debugging
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/cmp-dap'
-  use 'Ta"pwsh.exe -file .\\dl_binaries.ps1"styep/structlog.nvim'
+  -- use 'Ta"pwsh.exe -file .\\dl_binaries.ps1"styep/structlog.nvim'
   -- AIs
   use {                        
     "Exafunction/codeium.nvim",
@@ -99,7 +99,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  use { 'codota/tabnine-nvim', run = "pwsh.exe -file .\\dl_binaries.ps1" }
+  -- use { 'codota/tabnine-nvim', run = "pwsh.exe -file .\\dl_binaries.ps1" }
   -- use 'madox2/vim-ai' -- asks money
   -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
