@@ -1,3 +1,7 @@
+if vim.fn.has("win32") == 1 and vim.env.HOME == nil then
+  vim.env.HOME = vim.env.USERPROFILE
+end
+
 vim.opt.encoding = 'utf-8'
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.timeoutlen = 1000
@@ -10,7 +14,7 @@ require 'tree'
 require 'keymap'
 require 'autopairs'
 require 'completion'
-require'toggleterm'
+require 'toggleterm'
 require("bufferline").setup{
   options = {
     separator_style = "slant",
@@ -104,7 +108,7 @@ configs.setup {
   indent = { enable = true }
 }
 -- AIs 
--- require("copilot").setup{}
+require("copilot").setup{}
 -- local tabnine = require('cmp_tabnine.config')
 -- tabnine:setup({max_lines = 1000, max_num_results = 20, sort = true})
 require('tabnine').setup({

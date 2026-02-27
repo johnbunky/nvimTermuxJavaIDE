@@ -142,6 +142,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\jko\\AppData\\Local\\nvim-data\\site\\pack\\packer\\opt\\codeium.nvim",
     url = "https://github.com/Exafunction/codeium.nvim"
   },
+  ["copilot.lua"] = {
+    loaded = true,
+    path = "C:\\Users\\jko\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\copilot.lua",
+    url = "https://github.com/zbirenbaum/copilot.lua"
+  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "C:\\Users\\jko\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\friendly-snippets",
