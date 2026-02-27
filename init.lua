@@ -1,7 +1,13 @@
 if vim.fn.has("win32") == 1 and vim.env.HOME == nil then
   vim.env.HOME = vim.env.USERPROFILE
 end
-
+-- Force Defold files to be treated as Lua
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.script", "*.gui_script", "*.render_script", "*.vp", "*.fp"},
+  callback = function()
+    vim.bo.filetype = "lua"
+  end,
+})
 vim.opt.encoding = 'utf-8'
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.timeoutlen = 1000
@@ -37,8 +43,60 @@ require('lualine').setup {
 }
 require('mason').setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "gradle_ls", "jdtls",},
+    ensure_installed = { "gradle_ls", "jdtls", "lua_ls"},
 }
+-- Lua LSP config
+vim.lsp.config("lua_ls", {
+  settings = {
+    Lua = {
+      runtime = {
+        version = "Lua 5.1", -- Defold uses LuaJIT (5.1 compatible)
+      },
+      diagnostics = {
+        globals = {
+          "vim",
+          -- Core Defold modules
+          "go", "msg", "vmath", "factory", "sys", "sound", 
+          "particlefx", "camera", "collectionfactory", "collectionproxy",
+          "physics", "resource", "image", "buffer", "json", 
+          "crash", "profiler", "render", "spine", "sprite", 
+          "tilemap", "label", "gui", "html5", "iap", "iac",
+          "push", "webview", "window", "zlib", "http",
+          "socket", "timer", "model", "facebook",
+          -- Common Defold globals
+          "hash", "pprint", "init", "final", "update", 
+          "on_message", "on_input", "on_reload",
+        },
+      },
+      workspace = {
+        checkThirdParty = false,
+        -- Don't index Defold build directories
+        ignoreDir = {
+          ".git",
+          "build",
+          ".internal",
+        },
+        -- Remove the library setting entirely for Defold projects
+        -- or keep it empty
+        library = {},
+      },
+      completion = {
+        callSnippet = "Replace"
+      },
+      hint = {
+        enable = true,
+        semicolon = "Disable"
+      },
+      codeLens = {
+        enable = true
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+})
+vim.lsp.enable("lua_ls")
 -- Gradle
 vim.lsp.config("gradle_ls", {})
 
@@ -98,6 +156,7 @@ require("better_escape").setup {
         },
     },
 }
+
 -- TreeSettter Config
 local configs = require'nvim-treesitter.configs'
 configs.setup {
@@ -108,7 +167,7 @@ configs.setup {
   indent = { enable = true }
 }
 -- AIs 
-require("copilot").setup{}
+-- require("copilot").setup{}
 -- local tabnine = require('cmp_tabnine.config')
 -- tabnine:setup({max_lines = 1000, max_num_results = 20, sort = true})
 require('tabnine').setup({

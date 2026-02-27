@@ -101,7 +101,7 @@ return require('packer').startup(function(use)
 
   use { 'codota/tabnine-nvim', run = "pwsh.exe -file .\\dl_binaries.ps1" }
   -- use 'madox2/vim-ai' -- asks money
-  use { "zbirenbaum/copilot.lua" } -- asks money
+  -- use { "zbirenbaum/copilot.lua" } -- asks money
 --   use {
 --   "zbirenbaum/copilot-cmp",
 --   after = { "copilot.lua" },
