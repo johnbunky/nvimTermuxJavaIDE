@@ -1,6 +1,7 @@
 vim.opt.encoding = 'utf-8'
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.timeoutlen = 1000
+vim.g.python3_host_prog = "C:/Users/jko/scoop/apps/python/current/python.exe"
 
 require 'basic'
 require 'plug_packer'
@@ -34,24 +35,64 @@ require('mason').setup()
 require("mason-lspconfig").setup {
     ensure_installed = { "gradle_ls", "jdtls",},
 }
-require'lspconfig' 
-require'lspconfig'.gradle_ls.setup{}
-require'lspconfig'.groovyls.setup{}
-require'lspconfig'.cucumber_language_server.setup{
+-- Gradle
+vim.lsp.config("gradle_ls", {})
+
+-- Groovy
+vim.lsp.config("groovyls", {})
+
+-- Cucumber
+vim.lsp.config("cucumber_language_server", {
     cmd = { "cucumber-language-server", "--stdio" },
     filetypes = { "cucumber", "feature" },
-    root_dir = require("lspconfig").util.find_git_ancestor,
+    root_dir = vim.fs.dirname(vim.fs.find({ ".git" }, { upward = true })[1]),
     settings = {
-        features= {'src/test/**/*.feature'},
-        glue = {'src/test/**/*.java'}
-    }
-}
-require'lspconfig'.pyright.setup{}
+        features = { "src/test/**/*.feature" },
+        glue = { "src/test/**/*.java" },
+    },
+})
+
+-- Python
+vim.lsp.enable("pyright")
+
+-- C#
+vim.lsp.enable("csharp_ls")
 require('ibl').setup()
-require'lspconfig'.csharp_ls.setup{}
 -- better Escape
 require("better_escape").setup {
-    mapping = {"jk", "jj"}, -- a table with mappings to use
+    timeout = vim.o.timeoutlen, -- after `timeout` passes, you can press the escape key and the plugin will ignore it
+    default_mappings = true, -- setting this to false removes all the default mappings
+    mappings = {
+        -- i for insert
+        i = {
+            j = {
+                -- These can all also be functions
+                k = "<Esc>",
+                j = "<Esc>",
+            },
+        },
+        c = {
+            j = {
+                k = "<C-c>",
+                j = "<C-c>",
+            },
+        },
+        t = {
+            j = {
+                k = "<C-\\><C-n>",
+            },
+        },
+        v = {
+            j = {
+                k = "<Esc>",
+            },
+        },
+        s = {
+            j = {
+                k = "<Esc>",
+            },
+        },
+    },
 }
 -- TreeSettter Config
 local configs = require'nvim-treesitter.configs'
@@ -74,4 +115,11 @@ require('tabnine').setup({
   suggestion_color = {gui = "#808080", cterm = 244},
   exclude_filetypes = {"TelescopePrompt", "NvimTree"},
   log_file_path = nil, -- absolute path to Tabnine log file
+  ignore_certificate_errors = false,
+  -- workspace_folders = {
+  --   paths = { "/your/project" },
+  --   get_paths = function()
+  --       return { "/your/project" }
+  --   end,
+  -- },
 })
