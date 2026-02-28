@@ -37,7 +37,7 @@ return require('packer').startup(function(use)
   requires =  {'nvim-lua/plenary.nvim'} 
   }
   -- languages parser and highlight 
-  use 'sheerun/vim-polyglot'
+  -- use 'sheerun/vim-polyglot'
   use 'nvim-treesitter/nvim-treesitter'
   -- mason
   use "williamboman/mason.nvim"

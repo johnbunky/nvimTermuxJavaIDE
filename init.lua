@@ -183,6 +183,9 @@ require("better_escape").setup {
 }
 
 -- TreeSettter Config
+require("nvim-treesitter.install").compilers = { "clang" }
+require("nvim-treesitter.install").prefer_git = true
+
 local configs = require'nvim-treesitter.configs'
 configs.setup {
   ensure_installed = {"lua", "java", "groovy"},
