@@ -108,10 +108,14 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
 3. Once cloned, navigate into the `~/.config/nvim` directory.
 
-4. Run the following command to update plugins:
-
+4. Open Neovim — on the first launch you will see errors about missing plugins, this is expected. Run:
     ```
-    nvim -c "MasonUpdate" -c "PackerInstall"
+    :PackerSync
+    ```
+    Wait for all plugins to finish installing, then restart Neovim. Run `:PackerSync` again if any errors persist.
+5. Run MasonUpdate to install LSP servers:
+    ```
+    :MasonUpdate
     ```
 
     During the installation process, you may be prompted to install additional components. Navigate and press 'i' for each component listed.
@@ -124,7 +128,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
     - java-test
     - jdtls
 
-5. If any issues arise during the setup process, you can check the health of Neovim by running:
+6. If any issues arise during the setup process, you can check the health of Neovim by running:
 
     ```
     nvim -c "checkhealth"
