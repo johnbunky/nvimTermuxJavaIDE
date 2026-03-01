@@ -19,6 +19,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 - `<leader>tn`: Switches to the next tab.
 - `<leader>tp`: Switches to the previous tab.
 - `<leader>sv`: Applies changes made to the current file.
+- `<C-a>`: Select all.
 
 ### Telescope
 
@@ -94,8 +95,9 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
 
     ```
     pkg update && pkg upgrade
-    pkg install neovim git openjdk-17 gradle clang python nodejs ripgrep fd wget
-    pip install pynvim
+    pkg install neovim git openjdk-17 gradle clang python nodejs ripgrep fd wget luarocks
+    luarocks install tree-sitter-cli
+    pip install pynvim --break-system-packages
     ```
 
 2. Clone this repository into your Neovim configuration directory. Typically, this directory is located at `~/.config/nvim`. You can do this by running:

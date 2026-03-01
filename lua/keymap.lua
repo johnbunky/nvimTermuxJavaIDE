@@ -23,6 +23,7 @@ key_map("n", "<leader>tx", ":tabclose<CR>") -- close current tab
 key_map("n", "<leader>tn", ":tabn<CR>") --  go to next tab
 key_map("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 key_map('n', '<leader>sv', ':source %<CR>') -- apply changes
+key_map('n', '<C-a>', 'ggVG') -- select all
 -- telescope
 key_map('n', '<C-p>', ':lua require"telescope.builtin".find_files()<CR>')
 key_map('n', '<leader>fs', ':lua require"telescope.builtin".live_grep()<CR>')

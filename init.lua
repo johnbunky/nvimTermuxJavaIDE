@@ -17,7 +17,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 vim.opt.encoding = 'utf-8'
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.timeoutlen = 1000
-vim.g.python3_host_prog = "C:/Users/jko/scoop/apps/python/current/python.exe"
 
 require 'basic'
 require 'plug_packer'

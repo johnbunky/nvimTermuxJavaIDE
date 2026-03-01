@@ -1,32 +1,34 @@
-local ts_utils = require'nvim-treesitter.ts_utils'
-
 local M = {}
 
-function find_node_by_type(expr, type_name)
+-- Use native nvim API instead of deprecated ts_utils
+local function get_node_at_cursor()
+  return vim.treesitter.get_node()
+end
+
+local function find_node_by_type(expr, type_name)
   while expr do
     if expr:type() == type_name then
-        break
+      break
     end
     expr = expr:parent()
   end
   return expr
 end
 
-function find_child_by_type(expr, type_name)
+local function find_child_by_type(expr, type_name)
   local id = 0
   local expr_child = expr:child(id)
-  while expr_child do 
+  while expr_child do
     if expr_child:type() == type_name then
       break
     end
     id = id + 1
     expr_child = expr:child(id)
   end
-
   return expr_child
 end
 
-function find_nth_child_by_type(expr, type_name, n)
+local function find_nth_child_by_type(expr, type_name, n)
   local count = 0
   for i = 0, expr:child_count() - 1 do
     local child = expr:child(i)
@@ -41,58 +43,47 @@ function find_nth_child_by_type(expr, type_name, n)
 end
 
 function M.get_current_method_name()
-  local current_node = ts_utils.get_node_at_cursor()
+  local current_node = get_node_at_cursor()
   if not current_node then return nil end
-
   local expr = find_node_by_type(current_node, 'method_declaration')
   if not expr then return nil end
-
-  -- Get the 2nd identifier (1st is return type like Task, 2nd is actual method name)
   local method_identifier = find_nth_child_by_type(expr, 'identifier', 2)
   if not method_identifier then return nil end
-
   return vim.treesitter.get_node_text(method_identifier, 0)
 end
 
 function M.get_current_class_name()
-  local current_node = ts_utils.get_node_at_cursor()
+  local current_node = get_node_at_cursor()
   if not current_node then return nil end
-
   local class_declaration = find_node_by_type(current_node, 'class_declaration')
   if not class_declaration then return nil end
-  
   local child = find_child_by_type(class_declaration, 'identifier')
   if not child then return nil end
   return vim.treesitter.get_node_text(child, 0)
 end
 
 function M.get_current_package_name()
-  local current_node = ts_utils.get_node_at_cursor()
+  local current_node = get_node_at_cursor()
   if not current_node then return nil end
-
   local program_expr = find_node_by_type(current_node, 'program')
   if not program_expr then return nil end
   local package_expr = find_child_by_type(program_expr, 'package_declaration')
   if not package_expr then return nil end
-
   local child = find_child_by_type(package_expr, 'scoped_identifier')
   if not child then return nil end
   return vim.treesitter.get_node_text(child, 0)
 end
 
 function M.get_current_full_class_name()
-  -- local package = M.get_current_package_name()
-  local class = M.get_current_class_name()
-  return class
-  -- return package .. '.' .. class
+  return M.get_current_class_name()
 end
 
 function M.get_current_full_method_name(delimiter)
   delimiter = delimiter or '.'
   local class_name = M.get_current_full_class_name()
   local method_name = M.get_current_method_name()
-  return class_name .. '.' .. method_name
+  if not class_name or not method_name then return nil end
+  return class_name .. delimiter .. method_name
 end
 
 return M
-
