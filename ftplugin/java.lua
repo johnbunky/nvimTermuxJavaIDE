@@ -9,7 +9,7 @@ local jdtls_path = vim.fn.stdpath('data') .. "/mason/packages/jdtls"
 local path_to_lsp_server = jdtls_path .. "/config_linux"
 local path_to_plugins = jdtls_path .. "/plugins/"
 -- TODO update luncher version
-local path_to_jar = path_to_plugins .. "org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar"
+local path_to_jar = vim.fn.glob(path_to_plugins .. "org.eclipse.equinox.launcher_*.jar")
 local lombok_path = jdtls_path .. "/lombok.jar"
 
 local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle", '.groovy' }
