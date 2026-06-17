@@ -99,21 +99,23 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
     luarocks install tree-sitter-cli
     pip install pynvim --break-system-packages
     ```
+2. Install a [Nerd Font](https://www.nerdfonts.com/) and set it as your terminal's font — required for the file/folder icons in NvimTree, bufferline, and lualine to render. Without one, icons show up blank or as tofu boxes.
 
-2. Clone this repository into your Neovim configuration directory. Typically, this directory is located at `~/.config/nvim`. You can do this by running:
+   On Arch:
+3. Clone this repository into your Neovim configuration directory. Typically, this directory is located at `~/.config/nvim`. You can do this by running:
 
     ```
     git clone https://github.com/johnbunky/nvimTermuxJavaIDE.git ~/.config/nvim
     ```
 
-3. Once cloned, navigate into the `~/.config/nvim` directory.
+4. Once cloned, navigate into the `~/.config/nvim` directory.
 
-4. Open Neovim — on the first launch you will see errors about missing plugins, this is expected. Run:
+5. Open Neovim — on the first launch you will see errors about missing plugins, this is expected. Run:
     ```
     :PackerSync
     ```
     Wait for all plugins to finish installing, then restart Neovim. Run `:PackerSync` again if any errors persist.
-5. Run MasonUpdate to install LSP servers:
+6. Run MasonUpdate to install LSP servers:
     ```
     :MasonUpdate
     ```
@@ -128,7 +130,7 @@ This repository contains my custom keybindings for my Neovim configuration. Thes
     - java-test
     - jdtls
 
-6. If any issues arise during the setup process, you can check the health of Neovim by running:
+7. If any issues arise during the setup process, you can check the health of Neovim by running:
 
     ```
     nvim -c "checkhealth"
