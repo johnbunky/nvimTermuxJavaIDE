@@ -48,7 +48,7 @@ require("bufferline").setup({
 })
 require("lualine").setup({
 	options = {
-		theme = "gruvbox",
+		theme = "kanagawa",
 	},
 })
 -- Lua LSP config
