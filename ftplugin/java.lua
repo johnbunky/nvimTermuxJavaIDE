@@ -1,95 +1,51 @@
 local jdtls_ok, jdtls = pcall(require, "jdtls")
 if not jdtls_ok then
-  vim.notify "JDTLS not found, install with `:LspInstall jdtls`"
+  vim.notify "nvim-jdtls not found"
   return
 end
 
--- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
-local jdtls_path = vim.fn.stdpath('data') .. "/mason/packages/jdtls"
-local path_to_lsp_server = jdtls_path .. "/config_linux"
-local path_to_plugins = jdtls_path .. "/plugins/"
--- TODO update luncher version
-local path_to_jar = vim.fn.glob(path_to_plugins .. "org.eclipse.equinox.launcher_*.jar")
-local lombok_path = jdtls_path .. "/lombok.jar"
-
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle", '.groovy' }
+local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
 local root_dir = require("jdtls.setup").find_root(root_markers)
 if root_dir == "" then
   return
 end
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local workspace_dir = vim.fn.stdpath('data') .. '/site/java/workspace-root/' .. project_name
-os.execute("mkdir " .. workspace_dir)
+local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
+local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
+vim.fn.mkdir(workspace_dir, "p")
 
+-- locate jdtls install dir from the binary itself, no hardcoded OS path
+local jdtls_bin = vim.fn.exepath("jdtls")
+if jdtls_bin == "" then
+  vim.notify "jdtls binary not found in PATH"
+  return
+end
+
+-- the system jdtls launcher script handles JVM args/jar/config internally,
+-- so we just call it directly instead of hand-building the java invocation
 local config = {
-  -- The command that starts the language server
-  -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
-  cmd = {
-    '/data/data/com.termux/files/usr/bin/java',
-    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-    '-Dosgi.bundles.defaultStartLevel=4',
-    '-Declipse.product=org.eclipse.jdt.ls.core.product',
-    '-Dlog.protocol=true',
-    '-Dlog.level=ALL',
-    '-javaagent:' .. lombok_path,
-    '-Xms1g',
-    '--add-modules=ALL-SYSTEM',
-    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-
-    '-jar', path_to_jar,
-    '-configuration', path_to_lsp_server,
-    '-data', workspace_dir,
+  cmd_env = {
+    JAVA_HOME = "/usr/lib/jvm/java-21-openjdk", -- Arch path; override per-machine if needed
   },
+  cmd = { jdtls_bin, "-data", workspace_dir },
 
-  -- This is the default if not provided, you can remove it. Or adjust as needed.
-  -- One dedicated LSP server & client will be started per unique root_dir
   root_dir = root_dir,
 
-  -- Here you can configure eclipse.jdt.ls specific settings
-  -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-  -- for a list of options
   settings = {
     java = {
-      home = '/data/data/com.termux/files/usr/bin/java',
-      eclipse = {
-        downloadSources = true,
-      },
       configuration = {
         updateBuildConfiguration = "interactive",
-        runtimes = {
-          {
-            name = "JavaSE-18",
-            path = "",
-          },
-          {
-            name = "JavaSE-17",
-            path = ""
-            -- path = "/data/data/com.termux/files/usr/bin/java",
-          }
-        }
       },
-      maven = {
-        downloadSources = true,
-      },
-      implementationsCodeLens = {
-        enabled = true,
-      },
-      referencesCodeLens = {
-        enabled = true,
-      },
-      references = {
-        includeDecompiledSources = true,
-      },
+      maven = { downloadSources = true },
+      implementationsCodeLens = { enabled = true },
+      referencesCodeLens = { enabled = true },
+      references = { includeDecompiledSources = true },
       format = {
         enabled = true,
         settings = {
-          url = vim.fn.stdpath "config" .. "/lang-servers/intellij-java-google-style.xml",
-          -- profile = "GoogleStyle",
+          url = vim.fn.stdpath("config") .. "/lang-servers/intellij-java-google-style.xml",
         },
       },
-
     },
     signatureHelp = { enabled = true },
     completion = {
@@ -102,14 +58,8 @@ local config = {
         "java.util.Objects.requireNonNullElse",
         "org.mockito.Mockito.*",
       },
-      importOrder = {
-        "java",
-        "javax",
-        "com",
-        "org"
-      },
+      importOrder = { "java", "javax", "com", "org" },
     },
-    extendedClientCapabilities = extendedClientCapabilities,
     sources = {
       organizeImports = {
         starThreshold = 9999,
@@ -127,26 +77,37 @@ local config = {
   flags = {
     allow_incremental_sync = true,
   },
+
+  -- debug adapter bundle: only wired up if java-debug is actually present;
+  -- otherwise jdtls still starts fine without debug support
   init_options = {
-    bundles = {
-      -- TODO update plugin versions
-      vim.fn.glob("/data/data/com.termux/files/home/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-0.50.0.jar", 1)
-    },
+    bundles = (function()
+      local debug_jar = vim.fn.glob(
+        vim.fn.stdpath("data") .. "/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar"
+      )
+      if debug_jar ~= "" then
+        return { debug_jar }
+      end
+      return {}
+    end)(),
   },
 }
 
-config['on_attach'] = function(client, bufnr)
-  require'keymaps'.map_java_keys(bufnr);
-  require "lsp_signature".on_attach({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    floating_window_above_cur_line = false,
-    padding = '',
-    handler_opts = {
-      border = "rounded"
-    }
-  }, bufnr)
+config.on_attach = function(client, bufnr)
+  local ok_keymaps, keymaps = pcall(require, "keymaps")
+  if ok_keymaps then
+    keymaps.map_java_keys(bufnr)
+  end
+
+  local ok_sig, lsp_signature = pcall(require, "lsp_signature")
+  if ok_sig then
+    lsp_signature.on_attach({
+      bind = true,
+      floating_window_above_cur_line = false,
+      padding = "",
+      handler_opts = { border = "rounded" },
+    }, bufnr)
+  end
 end
--- This starts a new client & server,
--- or attaches to an existing client & server depending on the `root_dir`.
--- require'jdtls'
-require('jdtls').start_or_attach(config)
+
+require("jdtls").start_or_attach(config)
