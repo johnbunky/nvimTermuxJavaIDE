@@ -1,5 +1,4 @@
 # nvim config
-
 Minimal, portable Neovim setup following the Unix philosophy:
 **Neovim is the frontend. The OS manages the toolchain.**
 
@@ -65,7 +64,7 @@ yay -S jdtls
 **Termux:**
 ```bash
 pkg install lua-language-server shellcheck shfmt stylua ripgrep fd git neovim
-# jdtls not available on Termux -- Java LSP skipped on Android
+# for jdtls on Termux: set LSP_JAVA=true in bootstrap.sh and run it
 ```
 
 **Debian/Ubuntu:**
@@ -96,6 +95,21 @@ Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
 ```vim
 :checkhealth
 ```
+
+### Adding a language server later
+
+`bootstrap.sh` is the Mason replacement. Edit the flags at the top, run the script:
+
+```bash
+# in bootstrap.sh, set the flag:
+LSP_JAVA=true
+
+# then run:
+./bootstrap.sh
+```
+
+No `:MasonInstall`, no manual PATH management. Re-run anytime to add new tools
+or provision a fresh machine.
 
 ## Keybindings
 
@@ -190,6 +204,7 @@ Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
 ```
 ~/.config/nvim/
 ├── init.lua                          entry point
+├── bootstrap.sh                      Mason replacement — install/update toolchain
 ├── lazy-lock.json                    pinned plugin versions (committed)
 ├── lang-servers/
 │   └── intellij-java-google-style.xml
@@ -198,7 +213,7 @@ Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
 └── lua/
     ├── basic.lua                     core options
     ├── plugins.lua                   lazy.nvim spec
-    ├── colorscheme.lua
+    ├── colorscheme.lua               kanagawa-dragon + transparency
     ├── keymap.lua
     ├── completion.lua                nvim-cmp config
     ├── linting.lua                   nvim-lint (shellcheck)
@@ -213,6 +228,6 @@ Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
 | Environment | Status | Notes |
 |-------------|--------|-------|
 | Arch Linux | ✅ | Full stack including jdtls/Java |
-| Termux (Android) | ✅ | lua_ls + shell tools; jdtls skipped |
+| Termux (Android) | 🔄 | lua_ls + shell tools confirmed; jdtls via bootstrap.sh |
 | iSH (iOS) | 🔄 | Treesitter compile slow on x86 emu |
 | Windows | ⚠️ | Untested on this branch |
