@@ -39,8 +39,6 @@ System packages (installed via pacman / pkg / apt / brew)
 └── git
 ```
 
-No Node. No Python. No Mason.
-
 ## Installation
 
 ### 1. Install system dependencies
@@ -88,7 +86,7 @@ git clone -b minimal https://github.com/johnbunky/nvimTermuxJavaIDE.git ~/.confi
 ### 4. First launch
 
 Open Neovim — lazy.nvim bootstraps itself and installs all plugins automatically.
-Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
+Watch the progress with `:Lazy`.
 
 ### 5. Verify
 
@@ -98,17 +96,39 @@ Watch the progress with `:Lazy`. No `:PackerSync`, no `:MasonUpdate` needed.
 
 ### Adding a language server later
 
-`bootstrap.sh` is the Mason replacement. Edit the flags at the top, run the script:
+`bootstrap.sh` Edit the flags at the top, run the script:
 
 ```bash
 # in bootstrap.sh, set the flag:
-LSP_JAVA=true
+LSP_GRADLE=true
+.....
+# ── gradle-language-server ────────────────────
+
+if [ "$LSP_GRADLE" = "true" ]; then
+  echo "==> gradle-language-server"
+  # no package manager has this -- build from source once
+  _GRADLE_LS_DIR="$HOME/.local/share/gradle-language-server"
+  if [ ! -f "$_GRADLE_LS_DIR/build/libs/gradle-language-server-all.jar" ]; then
+    have git || install_pkg git
+    have java || echo "ERROR: java required"
+    git clone https://github.com/microsoft/vscode-gradle.git "$_GRADLE_LS_DIR"
+    cd "$_GRADLE_LS_DIR" && ./gradlew installDist
+    # write launcher
+    cat > "$HOME/.local/bin/gradle-language-server" << 'LAUNCHER'
+#!/usr/bin/env bash
+exec java -jar "$HOME/.local/share/gradle-language-server/build/libs/gradle-language-server-all.jar" "$@"
+LAUNCHER
+    chmod +x "$HOME/.local/bin/gradle-language-server"
+  else
+    echo "  already installed"
+  fi
+fi
 
 # then run:
 ./bootstrap.sh
 ```
 
-No `:MasonInstall`, no manual PATH management. Re-run anytime to add new tools
+No manual PATH management. Re-run anytime to add new tools
 or provision a fresh machine.
 
 ## Keybindings
