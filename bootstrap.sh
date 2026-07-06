@@ -26,7 +26,6 @@ TOOL_FD=true
 # ─────────────────────────────────────────────
 
 JDTLS_VERSION="1.60.0"
-JDTLS_TIMESTAMP="202506271355" # update when bumping version
 JDTLS_DIR="$HOME/.local/share/jdtls"
 
 # ── detect OS ────────────────────────────────
@@ -162,7 +161,7 @@ if [ "$LSP_JAVA" = "true" ]; then
     if [ ! -f "$JDTLS_DIR/plugins/org.eclipse.equinox.launcher_"*.jar ] 2>/dev/null; then
       echo "  downloading jdtls ${JDTLS_VERSION}"
       mkdir -p "$JDTLS_DIR"
-      _URL="https://download.eclipse.org/jdtls/milestones/${JDTLS_VERSION}/jdt-language-server-${JDTLS_VERSION}-${JDTLS_TIMESTAMP}.tar.gz"
+      _URL="https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz"
       curl -L "$_URL" | tar -xz -C "$JDTLS_DIR"
 
       # write a launcher script so 'jdtls' works from PATH
