@@ -181,6 +181,15 @@ or provision a fresh machine.
 | `<leader>bp` | Pin buffer |
 | `<leader>bs` | Switch buffer |
 
+### Reviewing changes
+| Key | Action |
+|-----|--------|
+| `<]c / [c>` | Next / previous hunk<D-`> |
+| `<leader>hp` | Peview hunk |
+| `<leader>hs` | Stage hunk |
+| `<leader>hr` | Reject hunk |
+| `<leader>hd` | Open diff view |
+
 ### Terminal
 | Key | Action |
 |-----|--------|
